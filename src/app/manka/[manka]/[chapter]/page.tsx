@@ -1,60 +1,14 @@
-import React, { ReactElement, useEffect } from 'react'
-import { GetStaticProps, InferGetServerSidePropsType } from 'next'
-import { useRouter } from 'next/router'
-import { appRouter } from '@/shared/server/routers/_app'
-import { db } from '@/shared/utils/db'
-import { trpc } from '@/shared/utils/trpc'
-import { createServerSideHelpers } from '@trpc/react-query/server'
-import SuperJSON from 'superjson'
+'use server'
 
-import AsideBarChapter from '@/components/aside-bar-chapter'
+import React from 'react'
 
-export const getStaticPaths = async () => {
-  const data = await db.anime.findMany({ include: { chapters: true } })
-  const paths = data.flatMap(anime => {
-    return anime?.chapters?.map(chapterNumber => ({
-      params: { manka: anime.name, chapter: chapterNumber.chapter.toString() },
-    }))
-  })
-  return {
-    paths,
-    fallback: false,
-  }
-}
+import { getMangaByName, getMangaChapter } from '@/app/actions/manga-actions'
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const helpers = createServerSideHelpers({
-    router: appRouter,
-    ctx: {},
-    transformer: SuperJSON,
-  })
-  await helpers.manga.getMangaChapter.prefetch({
-    name: params?.manka as string,
-    chapter: Number(params?.chapter),
-  })
-  return {
-    props: {
-      trpcState: helpers.dehydrate(),
-      // manka,
-    },
-    revalidate: 10,
-  }
-}
+const Chapter = async ({ params }: { params: { manka: string; chapter: string } }) => {
+  const decodedName = decodeURIComponent(params?.manka)
+  const chapter = await getMangaChapter(decodedName, Number(params?.chapter))
+  const manga = await getMangaByName(decodedName)
 
-const Chapter = (props: InferGetServerSidePropsType<typeof getStaticProps>) => {
-  const router = useRouter()
-
-
-  const { data: chapter } = trpc.manga.getMangaChapter.useQuery(
-    {
-      name: router?.query?.manka as string,
-      chapter: Number(router?.query?.chapter),
-    },
-    {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    },
-  )
   return (
     <>
       <div className="flex items-center justify-center">
@@ -65,14 +19,10 @@ const Chapter = (props: InferGetServerSidePropsType<typeof getStaticProps>) => {
             </div>
           ))}
         </div>
-        <AsideBarChapter name={chapter?.animeName} />
+        {/* <AsideBarChapter manga={manga} /> */}
       </div>
     </>
   )
-}
-
-Chapter.getLayout = function getLayout(page: ReactElement) {
-  return <>{page}</>
 }
 
 export default Chapter

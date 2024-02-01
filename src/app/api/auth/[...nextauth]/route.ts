@@ -11,6 +11,7 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+
   callbacks: {
     async signIn({ user }: any) {
       const isUser = await prisma.user.findUnique({
@@ -26,6 +27,9 @@ export const authOptions = {
         console.log('already created')
       }
       return true
+    },
+    async signOut() {
+      console.log('Callback singOUT')
     },
   },
 }

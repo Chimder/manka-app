@@ -6,9 +6,9 @@ import './globals.css'
 import { getServerSession } from 'next-auth'
 
 import AsideBar from '@/components/aside-bar'
-import { ClientProvider } from '@/components/Provider'
-import SessionProvider from '@/components/session-provider'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ClientProvider } from '@/components/providers/tanstack-provider'
+import { ThemeProvider } from '@/components/providers/theme-provider'
+import SessionProvider from '@/components/providers/session-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,8 +33,10 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* <AsideBar /> */}
-            <SessionProvider session={session}>{children}</SessionProvider>
+            <SessionProvider session={session}>
+              <AsideBar />
+              {children}
+            </SessionProvider>
           </ThemeProvider>
         </ClientProvider>
       </body>

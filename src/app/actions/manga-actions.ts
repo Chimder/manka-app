@@ -1,16 +1,17 @@
+import { constants } from 'buffer'
 import prisma from '@/shared/lib/prisma'
 
 export const getAllManga = async () => {
   const manga = await prisma.anime.findMany({ include: { chapters: true } })
-  console.log(manga)
   return manga
 }
 
 export const getMangaByName = async (name: string) => {
-  return prisma.anime.findFirst({
+  const manga = await prisma.anime.findFirst({
     where: { name: { contains: name, mode: 'insensitive' } },
     include: { chapters: true },
   })
+  return manga
 }
 
 export const getMangaChapter = async (name: string, chapter: number) => {
@@ -47,7 +48,7 @@ export const getMangaByGenres = async (
   const items = await prisma.anime.findMany({
     where: {
       name: { contains: name, mode: 'insensitive' },
-       genres: { hasEvery: genres },
+      genres: { hasEvery: genres },
       status: { contains: status },
       country: { contains: country },
     },
@@ -114,7 +115,7 @@ export const getUserFavorite = async (email: string, name: string) => {
     select: { name: true },
   })
 
-  const favoriteNames = favoriteList.map(anime => anime.name)
+  const favoriteNames = favoriteList.map((anime: { name: string }) => anime.name)
 
   return favoriteNames.includes(name)
 }

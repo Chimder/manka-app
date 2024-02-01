@@ -1,5 +1,5 @@
 import AsideBarChapter from './aside-bar-chapter'
-import { ThemeProvider } from './theme-provider'
+import { ThemeProvider } from './providers/theme-provider'
 
 export default function LayoutTwo({ children }: { children: React.ReactNode }) {
   return (

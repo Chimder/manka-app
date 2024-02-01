@@ -1,25 +1,30 @@
+'use client'
+
+// 'use server'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useParams, useRouter } from 'next/navigation'
 // import { trpc } from '@/shared/utils/trpc'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
+
+import { getMangaByName } from '@/app/actions/manga-actions'
 
 import DropDownN from './drop-down'
 import { Progress } from './ui/progress'
 
-interface AsideBarChapterProps {
-  name?: string
+interface Props {
+  manga?: any
   isSuccess?: boolean
 }
 
-function AsideBarChapter({ name, isSuccess }: AsideBarChapterProps) {
-  return
-  const router = useRouter()
+function AsideBarChapter({ manga }: Props) {
+  const param = useParams()
 
-  const { data: manga } = trpc.manga.getMangaByName.useQuery({
-    name: name as string,
-  })
+  // const decodedName = decodeURIComponent(params.manka)
+  const chapter = param?.chaptert
+  const manka = decodeURIComponent(param?.manka as string)
+  console.log('Router', param)
 
-  const params = Number(router?.query?.chapter)
+  const params = Number(chapter)
   const prew = params - 1
   const next = params + 1
   return (
@@ -29,14 +34,14 @@ function AsideBarChapter({ name, isSuccess }: AsideBarChapterProps) {
         <Link className="nav_icon" href="/">
           ❄️
         </Link>
-        <Link href={`/manka/${router?.query?.manka}`} className="nav_btn">
+        <Link href={`/manka/${manka}`} className="nav_btn">
           Manga
         </Link>
 
         {/* {isSuccess && ( */}
         <div>
           <DropDownN
-            text={router?.query?.chapter!}
+            text={chapter!}
             // click={}
             ctgr="chapter"
             clsn="w-[20vw] xl:w-[30vw] lg:w-[40vw] md:w-[80vw] h-full flex rounded-md bg-background/40  backdrop-blur-md z-999 p-4 text-lg overflow-y-auto "
@@ -46,7 +51,7 @@ function AsideBarChapter({ name, isSuccess }: AsideBarChapterProps) {
         {/* )} */}
 
         <Link
-          href={`/manka/${router?.query?.manka}/${prew}`}
+          href={`/manka/${manka}/${prew}`}
           className={`" nav_btn flex-col", flex ${
             params === 1 && 'pointer-events-none opacity-40'
           }`}
@@ -55,7 +60,7 @@ function AsideBarChapter({ name, isSuccess }: AsideBarChapterProps) {
           <span>Prew</span>
         </Link>
         <Link
-          href={`/manka/${router?.query?.manka}/${next}`}
+          href={`/manka/${manka}/${next}`}
           className={`" nav_btn flex-col", flex ${
             params === manga?.chapters?.length && 'pointer-events-none opacity-40'
           }`}

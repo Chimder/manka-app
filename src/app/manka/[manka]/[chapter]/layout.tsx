@@ -7,7 +7,7 @@ export default function ChapterLayout({
 }>) {
   return (
     <>
-      <AsideBar />
+      {/* <AsideBarChapter /> */}
       {children}
     </>
   )

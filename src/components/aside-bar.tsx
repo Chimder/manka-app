@@ -1,19 +1,19 @@
+'use server'
+
 import React from 'react'
+import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
-// import { trpc } from '@/shared/utils/trpc'
 import { HeartFilledIcon, HeartIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
+import { signOut } from 'next-auth/react'
 
-import { DialogDemo } from './dialog-delete-account'
-import { Button } from './ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { ThemeToggle } from './ui/themeToggle'
+import { deleteUserAccount } from '@/app/actions/user-actions'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
-function AsideBar() {
-  return
-  const { data: session, status } = useSession()
+import DeleteUserAndToggleTheme from './c-manga-deleteUser'
 
-  const { mutate: DeleteUser } = trpc.user.deleteUserAccount.useMutation()
+async function AsideBar() {
+  const session = await getServerSession(authOptions)
 
   return (
     <div className="nav_bar_container">
@@ -40,29 +40,7 @@ function AsideBar() {
             <div></div>
           </Link>
         )}
-
-        <div className="nav_icon">
-          {session?.user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <img className="z-999 w-6" src={session?.user?.image!} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col">
-                <Button onClick={() => signOut()} className="my-1 text-white">
-                  LogOut
-                </Button>
-                <DialogDemo>
-                  <Button className="my-1 bg-red-600 text-white hover:bg-red-600/80">
-                    Delete Account
-                  </Button>
-                </DialogDemo>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div onClick={() => signIn()}>user</div>
-          )}
-        </div>
-        <ThemeToggle />
+        <DeleteUserAndToggleTheme />
       </nav>
     </div>
   )

@@ -1,4 +1,5 @@
-// "use"
+'use server'
+
 import prisma from '@/shared/lib/prisma'
 
 export const isUser = (email: string) => {
@@ -59,7 +60,14 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
 }
 
 export const deleteUserAccount = async (email: string) => {
-  const user = await isUser(email)
+  // 'use server'
+  console.log('USeRDELETE', email)
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  })
+  console.log('USER', user)
   if (!user) {
     return console.log('User not found')
   }
