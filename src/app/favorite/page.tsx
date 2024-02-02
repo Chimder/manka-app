@@ -6,7 +6,7 @@ import { getServerSession } from 'next-auth'
 import FavoriteList from '@/components/c-user-favorite-manga'
 
 import { getUserFavorite } from '../actions/user-actions'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import authOptions from '@/shared/lib/options'
 
 type Props = {}
 

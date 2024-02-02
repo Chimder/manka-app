@@ -10,7 +10,7 @@ import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
 import { getMangaByName, getUserFavorite } from '@/app/actions/manga-actions'
 import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import authOptions from '@/shared/lib/options'
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
