@@ -52,7 +52,7 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
       where: { email: email },
       data: {
         favorite: {
-          set: user.favorite.filter(anime => anime !== name),
+          set: user.favorite.filter((anime: string) => anime !== name),
         },
       },
     })
