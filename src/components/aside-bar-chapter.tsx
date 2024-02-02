@@ -1,28 +1,24 @@
 'use client'
 
-// 'use server'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
-// import { trpc } from '@/shared/utils/trpc'
+import { useParams } from 'next/navigation'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 
-import { getMangaByName } from '@/app/actions/manga-actions'
+import { Manga } from '@/types/manga'
 
 import DropDownN from './drop-down'
 import { Progress } from './ui/progress'
 
 interface Props {
-  manga?: any
+  manga?: Manga
   isSuccess?: boolean
 }
 
 function AsideBarChapter({ manga }: Props) {
   const param = useParams()
 
-  // const decodedName = decodeURIComponent(params.manka)
-  const chapter = param?.chaptert
+  const chapter = param?.chapter
   const manka = decodeURIComponent(param?.manka as string)
-  console.log('Router', param)
 
   const params = Number(chapter)
   const prew = params - 1
@@ -38,17 +34,14 @@ function AsideBarChapter({ manga }: Props) {
           Manga
         </Link>
 
-        {/* {isSuccess && ( */}
         <div>
           <DropDownN
             text={chapter!}
-            // click={}
             ctgr="chapter"
             clsn="w-[20vw] xl:w-[30vw] lg:w-[40vw] md:w-[80vw] h-full flex rounded-md bg-background/40  backdrop-blur-md z-999 p-4 text-lg overflow-y-auto "
             data={manga}
           ></DropDownN>
         </div>
-        {/* )} */}
 
         <Link
           href={`/manka/${manka}/${prew}`}

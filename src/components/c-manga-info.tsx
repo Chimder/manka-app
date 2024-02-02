@@ -3,21 +3,21 @@
 import React, { useTransition } from 'react'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
-import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useSession } from 'next-auth/react'
 
+import { Manga } from '@/types/manga'
+
+import PublicationStatus from './publication-status'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 type Props = {
-  manga: Anime
+  manga: Manga
   addFavorite: (name: string) => Promise<void>
   favorite: boolean
 }
 
 const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
-  const { data: session } = useSession()
   const isMobile = useWindowSize()
   const [isPending, startTransition] = useTransition()
 
@@ -75,6 +75,7 @@ const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
                   {genres}
                 </Badge>
               ))}
+              <PublicationStatus year={manga?.published} status={manga?.status} />
               {/* <DotPublication year={manga?.published} status={manga?.status} /> */}
             </div>
             <div className="mx-5 text-lg xl:text-[16px] lg:text-sm md:hidden">

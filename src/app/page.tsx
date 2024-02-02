@@ -3,7 +3,7 @@
 import React from 'react'
 
 import { Scroll } from '@/components/scroll'
-import { ScrollMost } from '@/components/scroll-pop'
+import { ScrollMost } from '@/components/scroll-most'
 
 import { getMangaPopular } from './actions/manga-actions'
 

@@ -8,7 +8,7 @@ type Props = {
   year: number | string
 }
 
-const DotPublication = ({ status, year }: Props) => {
+const PublicationStatus = ({ status, year }: Props) => {
   let iconColor: string
   let badgeBg: string
 
@@ -34,4 +34,4 @@ const DotPublication = ({ status, year }: Props) => {
   )
 }
 
-export default DotPublication
+export default PublicationStatus

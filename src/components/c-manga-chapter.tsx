@@ -1,11 +1,13 @@
 import React from 'react'
-import { Anime } from '@prisma/client'
-import { formatCreatedAt } from '@/shared/lib/data-format'
 import Link from 'next/link'
+import { formatCreatedAt } from '@/shared/lib/data-format'
+
+import { Manga } from '@/types/manga'
+
 import Recomend from './c-manga-recomend'
 
 type Props = {
-  manga: Anime
+  manga: Manga
 }
 
 const MangaChapter = ({ manga }: Props) => {
@@ -13,7 +15,7 @@ const MangaChapter = ({ manga }: Props) => {
     <section className="containerM z-100 mx-auto h-full w-full bg-background pt-2.5 md:bg-transparent">
       <div className="flex md:flex-col ">
         <aside className="w-1/5 flex-col md:flex md:w-full md:items-center md:pt-4">
-          <Recomend />
+          {/* <Recomend /> */}
         </aside>
         <div className="w-4/5 px-5 md:w-full md:px-0">
           <span className="lg:text-md text-xl font-semibold md:px-4">Chapters</span>
@@ -27,7 +29,7 @@ const MangaChapter = ({ manga }: Props) => {
                 <div className="lg:text-sm">
                   Ch. {chap.chapter} - {chap.name}
                 </div>
-                <div className="lg:text-sm">{formatCreatedAt(chap.createdAt)}</div>
+                <div className="lg:text-sm">{formatCreatedAt(chap.createdAt.toDateString())}</div>
               </Link>
             ))}
           </div>

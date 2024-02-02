@@ -8,20 +8,20 @@ const AnimeRecomend = ({ name }: any) => {
   return
   const param = useRouter()
 
-  const {
-    data: manga,
-    refetch,
-    isFetching,
-  } = trpc.manga.getMangaByName.useQuery(
-    {
-      name: name,
-    },
-    {
-      staleTime: 0,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    },
-  )
+  // const {
+  //   data: manga,
+  //   refetch,
+  //   isFetching,
+  // } = trpc.manga.getMangaByName.useQuery(
+  //   {
+  //     name: name,
+  //   },
+  //   {
+  //     staleTime: 0,
+  //     refetchOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   },
+  // )
 
   useEffect(() => {
     refetch()

@@ -1,13 +1,8 @@
+'use client'
+
 import React from 'react'
-import {
-  resetTag,
-  setGenresTag,
-  setInputValue,
-  setLangTag,
-  setSort,
-  setStatus,
-} from '@/shared/Store/Slices/tagSlice'
-import { useAppDispatch, useAppSelector } from '@/shared/Store/store'
+import { useFiLter } from '@/shared/Store/filter'
+import useStore from '@/shared/Store/useStore'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,17 +11,17 @@ import { DropDownMenuN } from '@/components/drop-down-menu'
 import { MangaList } from '@/components/manga-list'
 
 function mangaSearch() {
-  const { inputValue } = useAppSelector(store => store.tagSlice)
-  const dispatch = useAppDispatch()
+  const filter = useStore(useFiLter, state => state)
+
   const handleTag = (tag: string, category: string) => {
     if (category === 'genres') {
-      dispatch(setGenresTag(tag))
+      filter?.setGenresTag(tag)
     } else if (category === 'lang') {
-      dispatch(setLangTag(tag))
+      filter?.setLangTag(tag)
     } else if (category === 'status') {
-      dispatch(setStatus(tag))
+      filter?.setStatus(tag)
     } else if (category === 'sort') {
-      dispatch(setSort(tag))
+      filter?.setSort(tag)
     }
   }
   const on = (e: React.MouseEvent<HTMLButtonElement>, category: string) => {
@@ -34,9 +29,7 @@ function mangaSearch() {
     handleTag(button.innerText, category)
   }
 
-  const reset = () => {
-    dispatch(resetTag())
-  }
+  console.log('STORE', filter)
 
   return (
     <main className="containerM h-full w-full overflow-x-hidden">
@@ -47,8 +40,8 @@ function mangaSearch() {
           <div className="w-full">
             <Input
               className="focus:border-1 w-full bg-button focus:border-primary"
-              value={inputValue}
-              onChange={e => dispatch(setInputValue(e.target.value))}
+              value={filter?.inputValue}
+              onChange={e => filter?.setInputValue(e.target.value)}
             />
           </div>
           <div className="flex md:flex md:flex-col">
@@ -62,7 +55,7 @@ function mangaSearch() {
           </div>
           <div className="md:w-full">
             <Button
-              onClick={() => reset()}
+              onClick={() => filter?.resetTag()}
               className="rounded-lg bg-red-800/80  px-12 py-4 text-red-400 hover:bg-red-800/40 md:w-full "
             >
               Reset

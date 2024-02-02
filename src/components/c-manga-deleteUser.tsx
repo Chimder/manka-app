@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useTransition } from 'react'
-import { revalidatePath } from 'next/cache'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMutation } from '@tanstack/react-query'
 import { signIn, signOut, useSession } from 'next-auth/react'

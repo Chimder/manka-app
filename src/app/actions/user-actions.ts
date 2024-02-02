@@ -9,7 +9,7 @@ export const isUser = (email: string) => {
     },
   })
 }
-export const getUserFavorite = (email: string) => {
+export const getUserFavorite = async (email: string) => {
   return prisma.user.findFirst({
     where: { email: email },
     select: { favorite: true },

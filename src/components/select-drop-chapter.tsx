@@ -1,8 +1,11 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
-import { Anime, Chapter } from '@prisma/client'
 
-type AnimeWithChapters = Anime & {
+import { Chapter, Manga } from '@/types/manga'
+
+type MangaWithChapters = Manga & {
   chapters: Chapter[]
 }
 
@@ -10,7 +13,7 @@ interface SelectDropBtnProps {
   type?: string
   // data?: string[];
   click?: (e: React.MouseEvent<HTMLButtonElement>, category: string) => void
-  data?: AnimeWithChapters
+  data?: MangaWithChapters
   closeMenu?: any
 }
 function SelectDropChapter({ type, click, data, closeMenu }: SelectDropBtnProps) {

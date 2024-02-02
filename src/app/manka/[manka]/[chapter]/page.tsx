@@ -2,12 +2,11 @@
 
 import React from 'react'
 
-import { getMangaByName, getMangaChapter } from '@/app/actions/manga-actions'
+import { getMangaChapter } from '@/app/actions/manga-actions'
 
 const Chapter = async ({ params }: { params: { manka: string; chapter: string } }) => {
   const decodedName = decodeURIComponent(params?.manka)
   const chapter = await getMangaChapter(decodedName, Number(params?.chapter))
-  const manga = await getMangaByName(decodedName)
 
   return (
     <>
@@ -19,7 +18,6 @@ const Chapter = async ({ params }: { params: { manka: string; chapter: string } 
             </div>
           ))}
         </div>
-        {/* <AsideBarChapter manga={manga} /> */}
       </div>
     </>
   )

@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Anime } from '@prisma/client'
 import useEmblaCarousel from 'embla-carousel-react'
 
+import { Manga } from '@/types/manga'
+
 interface Props {
-  popular: Anime[] | undefined
+  popular: Manga[]
 }
 export function ScrollMost({ popular }: Props) {
   const [scrollProgress, setScrollProgress] = useState(0)

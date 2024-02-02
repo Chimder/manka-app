@@ -1,5 +1,6 @@
 import React from 'react'
-import { useAppSelector } from '@/shared/Store/store'
+import { useFiLter } from '@/shared/Store/filter'
+import useStore from '@/shared/Store/useStore'
 import { Cross1Icon } from '@radix-ui/react-icons'
 
 import { Badge } from './ui/badge'
@@ -9,8 +10,10 @@ interface Props {
 }
 
 export const BadgeList = ({ handleTag }: Props) => {
-  return
-  const { genresTag, langTag, statusTag, sortTag } = useAppSelector(store => store.tagSlice)
+  const genresTag = useStore(useFiLter, store => store.genresTag)
+  const langTag = useStore(useFiLter, store => store.langTag)
+  const statusTag = useStore(useFiLter, store => store.statusTag)
+  const sortTag = useStore(useFiLter, store => store.sortTag)
   return (
     <>
       {genresTag?.map(tag => (

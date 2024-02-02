@@ -1,19 +1,15 @@
-'use server'
+'use client'
 
 import React from 'react'
-import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import { HeartFilledIcon, HeartIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { getServerSession } from 'next-auth'
-import { signOut } from 'next-auth/react'
+import {  useSession } from 'next-auth/react'
 
-import { deleteUserAccount } from '@/app/actions/user-actions'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 import DeleteUserAndToggleTheme from './c-manga-deleteUser'
 
-async function AsideBar() {
-  const session = await getServerSession(authOptions)
+function AsideBar() {
+  const { data: session, status } = useSession()
 
   return (
     <div className="nav_bar_container">
@@ -33,7 +29,7 @@ async function AsideBar() {
             <MagnifyingGlassIcon className="h-6 w-6 fill-current text-white" />
           </Link>
         </div>
-        {session?.user && (
+        {session?.user?.email && (
           <Link className=" nav_btn group h-10 w-10" href="/favorite">
             <HeartIcon className="h-10 w-10 fill-current text-primary group-hover:hidden" />
             <HeartFilledIcon className="hidden h-10 w-10 fill-current text-primary group-hover:block" />

@@ -1,12 +1,16 @@
+'use server'
+
 import { constants } from 'buffer'
 import prisma from '@/shared/lib/prisma'
 
-export const getAllManga = async () => {
+import { Chapter, Manga } from '@/types/manga'
+
+export const getAllManga = async (): Promise<Manga[]> => {
   const manga = await prisma.anime.findMany({ include: { chapters: true } })
   return manga
 }
 
-export const getMangaByName = async (name: string) => {
+export const getMangaByName = async (name: string): Promise<Manga> => {
   const manga = await prisma.anime.findFirst({
     where: { name: { contains: name, mode: 'insensitive' } },
     include: { chapters: true },
@@ -14,7 +18,7 @@ export const getMangaByName = async (name: string) => {
   return manga
 }
 
-export const getMangaChapter = async (name: string, chapter: number) => {
+export const getMangaChapter = async (name: string, chapter: number): Promise<Chapter> => {
   return prisma.chapter.findFirst({
     where: {
       animeName: name,
@@ -22,7 +26,7 @@ export const getMangaChapter = async (name: string, chapter: number) => {
     },
   })
 }
-export const getMangaPopular = () => {
+export const getMangaPopular = (): Promise<Manga[]> => {
   return prisma.anime.findMany({
     take: 10,
     orderBy: { popularity: { sort: 'desc' } },
@@ -30,43 +34,36 @@ export const getMangaPopular = () => {
 }
 
 export const getMangaByGenres = async (
-  genres: string[],
-  name: string,
-  status: string,
-  country: string,
-  orderField: string,
-  orderSort: 'asc' | 'desc',
-  cursor: number,
-  perPage: number,
-) => {
-  const skip = cursor ? cursor * perPage : 0
+  genres?: string[],
+  name?: string,
+  status?: string,
+  country?: string,
+  orderField?: string,
+  orderSort?: string,
+  page?: number,
+  perPage?: number,
+): Promise<Manga[]> => {
+  let orderBy: { [key: string]: string | undefined } = {}
 
-  let orderBy: { [key: string]: 'asc' | 'desc' | undefined } = {}
   if (orderField && orderSort) {
     orderBy[orderField] = orderSort
   }
-  const items = await prisma.anime.findMany({
-    where: {
-      name: { contains: name, mode: 'insensitive' },
-      genres: { hasEvery: genres },
-      status: { contains: status },
-      country: { contains: country },
-    },
+  const skip = page && perPage ? (page - 1) * perPage : 0
+
+  let where: any = {
+    name: { contains: name, mode: 'insensitive' },
+    status: { contains: status },
+    country: { contains: country },
+  }
+  if (genres && genres.length > 0) {
+    where.genres = { hasEvery: genres }
+  }
+  return prisma.anime.findMany({
+    where: where,
     orderBy: orderBy,
     skip: skip,
-    take: perPage + 1,
+    take: perPage,
   })
-
-  let nextCursor: typeof cursor | undefined = undefined
-  if (items.length > perPage) {
-    const nextItem = items.pop()
-    nextCursor = cursor ? cursor + 1 : 1 // увеличиваем cursor на 1 с каждым новым запросом
-  }
-
-  return {
-    items,
-    nextCursor,
-  }
 }
 
 export const addMangaRating = async (name: string, rating: number) => {

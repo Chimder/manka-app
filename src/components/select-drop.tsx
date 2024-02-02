@@ -1,9 +1,12 @@
+'use client'
+
 import React from 'react'
+import { useFiLter } from '@/shared/Store/filter'
+import useStore from '@/shared/Store/useStore'
 
 import { Button } from '@/components/ui/button'
 
-import { genres, lang, Lang, sort, status } from '../shared/data/anotherdata'
-import { useAppSelector } from '../shared/Store/store'
+import { genres, lang, sort, status } from '../shared/data/anotherdata'
 
 type Data = {
   text: string
@@ -21,9 +24,13 @@ function SelectDropBtn({ type, click }: SelectDropBtnProps) {
   const data: Data[] =
     type == 'genres' ? genres : type == 'status' ? status : type == 'lang' ? lang : sort
 
-  const { genresTag, langTag, statusTag, sortTag } = useAppSelector(store => store.tagSlice)
+  const genresTag = useStore(useFiLter, store => store.genresTag)
+  const langTag = useStore(useFiLter, store => store.langTag)
+  const statusTag = useStore(useFiLter, store => store.statusTag)
+  const sortTag = useStore(useFiLter, store => store.sortTag)
 
-  const allTags = [...genresTag, langTag, statusTag, sortTag]
+  const allTags = [...(genresTag || []), langTag, statusTag, sortTag]
+
   return (
     <div
       className={`flex w-full flex-col  items-center ${
