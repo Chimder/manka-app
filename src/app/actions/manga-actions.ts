@@ -1,4 +1,4 @@
-// 'use server'
+'use server'
 
 import { constants } from 'buffer'
 import prisma from '@/shared/lib/prisma'
