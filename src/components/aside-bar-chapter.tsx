@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { Anime } from '@prisma/client'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 
 import { Manga } from '@/types/manga'
@@ -10,7 +11,7 @@ import DropDownN from './drop-down'
 import { Progress } from './ui/progress'
 
 interface Props {
-  manga?: Manga
+  manga: any
   isSuccess?: boolean
 }
 

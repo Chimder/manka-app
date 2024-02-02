@@ -1,18 +1,19 @@
 'use server'
 
 import React from 'react'
+import authOptions from '@/shared/lib/options'
 import { getServerSession } from 'next-auth'
 
 import FavoriteList from '@/components/c-user-favorite-manga'
 
+import { getUserFavoriteManga } from '../actions/manga-actions'
 import { getUserFavorite } from '../actions/user-actions'
-import authOptions from '@/shared/lib/options'
 
 type Props = {}
 
 const Favorite = async () => {
   const session = await getServerSession(authOptions)
-  const favorite = await getUserFavorite(session?.user?.email as string)
+  const favorite = await getUserFavoriteManga(session?.user?.email as string)
 
   console.log('USERFAVORITE', favorite)
   return (

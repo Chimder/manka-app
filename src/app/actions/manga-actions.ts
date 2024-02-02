@@ -1,16 +1,16 @@
-'use server'
+// 'use server'
 
 import { constants } from 'buffer'
 import prisma from '@/shared/lib/prisma'
 
 import { Chapter, Manga } from '@/types/manga'
 
-export const getAllManga = async (): Promise<Manga[]> => {
+export const getAllManga = async () => {
   const manga = await prisma.anime.findMany({ include: { chapters: true } })
   return manga
 }
 
-export const getMangaByName = async (name: string): Promise<Manga> => {
+export const getMangaByName = async (name: string) => {
   const manga = await prisma.anime.findFirst({
     where: { name: { contains: name, mode: 'insensitive' } },
     include: { chapters: true },
@@ -18,7 +18,7 @@ export const getMangaByName = async (name: string): Promise<Manga> => {
   return manga
 }
 
-export const getMangaChapter = async (name: string, chapter: number): Promise<Chapter> => {
+export const getMangaChapter = async (name: string, chapter: number) => {
   return prisma.chapter.findFirst({
     where: {
       animeName: name,
@@ -26,7 +26,7 @@ export const getMangaChapter = async (name: string, chapter: number): Promise<Ch
     },
   })
 }
-export const getMangaPopular = (): Promise<Manga[]> => {
+export const getMangaPopular = () => {
   return prisma.anime.findMany({
     take: 10,
     orderBy: { popularity: { sort: 'desc' } },
@@ -42,7 +42,7 @@ export const getMangaByGenres = async (
   orderSort?: string,
   page?: number,
   perPage?: number,
-): Promise<Manga[]> => {
+) => {
   let orderBy: { [key: string]: string | undefined } = {}
 
   if (orderField && orderSort) {
@@ -128,6 +128,7 @@ export const getUserFavoriteManga = async (email: string) => {
   }
   return prisma.anime.findMany({
     where: { name: { in: user?.favorite } },
+    include: { chapters: true },
   })
 }
 

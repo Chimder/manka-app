@@ -3,6 +3,7 @@
 import React, { useTransition } from 'react'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
+import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
 
 import { Manga } from '@/types/manga'
@@ -12,9 +13,9 @@ import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 type Props = {
-  manga: Manga
+  manga: any
   addFavorite: (name: string) => Promise<void>
-  favorite: boolean
+  favorite: any
 }
 
 const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
@@ -67,7 +68,7 @@ const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
                 {favorite ? 'Favorite' : 'Add To Favorite'}
                 {isPending && <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />}
               </Button>
-              {manga?.genres.map((genres, i) => (
+              {manga?.genres.map((genres: any, i: string) => (
                 <Badge
                   className="lg:-py-0 z-10 ml-3 cursor-default bg-badge text-white hover:bg-badge/70 lg:rounded-md lg:px-1 md:mt-2 sm:mt-1"
                   key={i}

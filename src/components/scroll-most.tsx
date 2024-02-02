@@ -7,7 +7,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { Manga } from '@/types/manga'
 
 interface Props {
-  popular: Manga[]
+  popular: any
 }
 export function ScrollMost({ popular }: Props) {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -30,7 +30,7 @@ export function ScrollMost({ popular }: Props) {
       ref={emblaRef}
     >
       <div className="embla__container ">
-        {popular?.map((card, i) => (
+        {popular?.map((card: any, i: string) => (
           <div key={card.name} className="embla__slide h-full rounded-xl pr-8 md:pr-2">
             <div className="relative">
               <span className="absolute top-0 h-8 w-10 bg-orange-600 pl-4 pt-1">{i + 1}</span>

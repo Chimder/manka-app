@@ -1,13 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { formatCreatedAt } from '@/shared/lib/data-format'
+import { Anime } from '@prisma/client'
 
 import { Manga } from '@/types/manga'
 
 import Recomend from './c-manga-recomend'
 
 type Props = {
-  manga: Manga
+  manga: any
 }
 
 const MangaChapter = ({ manga }: Props) => {
@@ -20,7 +21,7 @@ const MangaChapter = ({ manga }: Props) => {
         <div className="w-4/5 px-5 md:w-full md:px-0">
           <span className="lg:text-md text-xl font-semibold md:px-4">Chapters</span>
           <div className="pt-3 md:px-4 md:pb-14">
-            {manga?.chapters?.map(chap => (
+            {manga?.chapters?.map((chap: any) => (
               <Link
                 className="my-2 flex items-center justify-between rounded-sm bg-accent p-4 md:my-1 md:py-3"
                 key={chap.name}

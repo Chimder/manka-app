@@ -4,9 +4,10 @@ import React from 'react'
 import Link from 'next/link'
 
 import { Manga } from '@/types/manga'
+import { Anime } from '@prisma/client'
 
 interface Props {
-  favorite: Manga[]
+  favorite: Anime[]
 }
 const FavoriteList = ({ favorite }: Props) => {
   return (
