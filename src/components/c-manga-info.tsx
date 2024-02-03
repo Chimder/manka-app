@@ -77,7 +77,6 @@ const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
                 </Badge>
               ))}
               <PublicationStatus year={manga?.published} status={manga?.status} />
-              {/* <DotPublication year={manga?.published} status={manga?.status} /> */}
             </div>
             <div className="mx-5 text-lg xl:text-[16px] lg:text-sm md:hidden">
               {manga?.describe}
