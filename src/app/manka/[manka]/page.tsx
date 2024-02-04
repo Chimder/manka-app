@@ -2,15 +2,17 @@
 
 import React from 'react'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import authOptions from '@/shared/lib/options'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { getServerSession } from 'next-auth'
 import { signIn } from 'next-auth/react'
 
 import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
+import { AnimeSearch } from '@/app/actions/anime-actions'
 import { getMangaByName, getUserFavorite } from '@/app/actions/manga-actions'
 import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
-import authOptions from '@/shared/lib/options'
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
@@ -20,8 +22,6 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const session = await getServerSession(authOptions)
   const favorite = await getUserFavorite(session?.user?.email as string, decodedName)
 
-  console.log('Session', session)
-  console.log('Favorite', favorite)
   const addFavorite = async (name: string) => {
     'use server'
     if (!session?.user?.email) {
@@ -32,6 +32,7 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
     }
   }
 
+  if (!manga) redirect('/')
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="overflow-x-hidden ">

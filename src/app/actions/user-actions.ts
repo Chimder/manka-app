@@ -33,7 +33,7 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
   const isAnimeInFavorites = await user.favorite.includes(name)
 
   if (!isAnimeInFavorites) {
-    const addpopular = await prisma.anime.update({
+    await prisma.anime.update({
       where: { name: name },
       data: {
         popularity: +1 as number,
@@ -42,8 +42,8 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
     return prisma.user.update({
       where: { email: email },
       data: {
-        favorite: {
-          push: name,
+      favorite: {
+        push: name,
         },
       },
     })

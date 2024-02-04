@@ -1,29 +1,21 @@
-// import { NextApiRequest, NextApiResponse } from 'next'
-// import axios from 'axios'
+import axios from 'axios'
 
 // const ACCESS_TOKEN = process.env.KODIC_ACCESS_TOKEN
 
-// export default async function animeById(req: NextApiRequest, res: NextApiResponse) {
-//   const { id } = req.query
+export async function animeById(id: string) {
+  const config = {
+    params: {
+      token: process.env.KODIC_ACCESS_TOKEN,
+      id: id as string,
+      with_material_data: true,
+    },
+  }
+  const { data } = await axios.get('https://kodikapi.com/search', config)
 
-//   const config = {
-//     params: {
-//       token: ACCESS_TOKEN,
-//       id: id as string,
-//     },
-//   }
+  console.log('ONIME', data)
 
-//   try {
-//     const response = await axios.get('https://kodikapi.com/search', config)
-//     const data = response.data
-//     res.status(200).json(data)
-//   } catch (error: any) {
-//     res.status(error.response?.status || 500).json({ error: error.message })
-//   }
-// }
-
-// import { NextApiRequest, NextApiResponse } from 'next'
-// import axios from 'axios'
+  return data.results[0]
+}
 
 // const ACCESS_TOKEN = process.env.KODIC_ACCESS_TOKEN
 
@@ -51,24 +43,17 @@
 //   }
 // }
 
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//   const { name } = req.query
+export async function AnimeSearch(name: string) {
+  const config = {
+    params: {
+      token: process.env.KODIC_ACCESS_TOKEN,
+      title: name as string,
+      strict: true,
+      with_material_data: true,
+      has_field: 'shikimori_id',
+    },
+  }
 
-//   const config = {
-//     params: {
-//       token: ACCESS_TOKEN,
-//       title: name as string,
-//       strict: true,
-//       with_material_data: true,
-//       has_field: 'shikimori_id',
-//     },
-//   }
-
-//   try {
-//     const { data } = await axios.get('https://kodikapi.com/search', config)
-//     // const data = response.data;
-//     res.status(200).json(data)
-//   } catch (error: any) {
-//     res.status(error.response?.status || 500).json({ error: error.message })
-//   }
-// }
+  const { data } = await axios.get('https://kodikapi.com/search', config)
+  return data?.results[0]
+}

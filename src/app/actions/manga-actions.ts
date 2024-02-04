@@ -1,9 +1,7 @@
 'use server'
 
-import { constants } from 'buffer'
 import prisma from '@/shared/lib/prisma'
-
-import { Chapter, Manga } from '@/types/manga'
+import type { AsyncReturnType } from 'type-fest'
 
 export const getAllManga = async () => {
   const manga = await prisma.anime.findMany({ include: { chapters: true } })
@@ -17,6 +15,7 @@ export const getMangaByName = async (name: string) => {
   })
   return manga
 }
+export type Anime = AsyncReturnType<typeof getMangaByName>
 
 export const getMangaChapter = async (name: string, chapter: number) => {
   return prisma.chapter.findFirst({

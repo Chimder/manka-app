@@ -12,7 +12,7 @@ const Chapter = async ({ params }: { params: { manka: string; chapter: string } 
     <>
       <div className="flex items-center justify-center">
         <div className="flex flex-col ">
-          {chapter?.img?.map((chap, i) => (
+          {chapter?.img?.map((chap: string, i: number) => (
             <div key={i}>
               <img src={chap} alt="chap" />
             </div>

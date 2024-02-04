@@ -30,7 +30,7 @@ function AsideBar() {
           </Link>
         </div>
         {session?.user?.email && (
-          <Link className=" nav_btn group h-10 w-10" href="/favorite">
+          <Link className=" nav_btn group h-10 w-10 ml-1" href="/favorite">
             <HeartIcon className="h-10 w-10 fill-current text-primary group-hover:hidden" />
             <HeartFilledIcon className="hidden h-10 w-10 fill-current text-primary group-hover:block" />
             <div></div>

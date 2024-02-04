@@ -35,12 +35,12 @@ const DeleteUserAndToggleTheme = () => {
   })
 
   return (
-    <div className="flex">
-      <div className="nav_icon">
+    <div className="flex ">
+      <div className="nav_icon mr-4 flex">
         {session?.user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <img className="z-999 w-6" src={session?.user?.image!} />
+              <img className="z-999 w-6 " src={session?.user?.image!} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-col">
               <Button onClick={() => signOut()} className="my-1 text-white">
@@ -66,7 +66,12 @@ const DeleteUserAndToggleTheme = () => {
                       </Button>
                     ) : (
                       <>
-                        <Button onClick={() => DeleteUser()} className="text-white" type="submit">
+                        <Button
+                          disabled={isPending}
+                          onClick={() => DeleteUser()}
+                          className="text-white"
+                          type="submit"
+                        >
                           Delete
                           {isPending && <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />}
                         </Button>

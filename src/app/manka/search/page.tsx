@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { BadgeList } from '@/components/badge-list'
 import { DropDownMenuN } from '@/components/drop-down-menu'
-import { MangaList } from '@/components/manga-list'
+import { MangaList } from '@/components/c-manga-list'
 
 function mangaSearch() {
   const filter = useStore(useFiLter, state => state)

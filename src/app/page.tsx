@@ -10,6 +10,7 @@ import { getMangaPopular } from './actions/manga-actions'
 export default async function Home() {
 
   const manga = await getMangaPopular()
+
   return (
     <main className=" h-full w-full border-[1px] border-pink-600">
       <section className="items-center justify-center ">

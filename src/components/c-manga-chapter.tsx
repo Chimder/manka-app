@@ -1,11 +1,10 @@
+'use server'
+
 import React from 'react'
 import Link from 'next/link'
 import { formatCreatedAt } from '@/shared/lib/data-format'
-import { Anime } from '@prisma/client'
 
-import { Manga } from '@/types/manga'
-
-import Recomend from './c-manga-recomend'
+import AnimeRecomend from './anime.recomend'
 
 type Props = {
   manga: any
@@ -16,7 +15,7 @@ const MangaChapter = ({ manga }: Props) => {
     <section className="containerM z-100 mx-auto h-full w-full bg-background pt-2.5 md:bg-transparent">
       <div className="flex md:flex-col ">
         <aside className="w-1/5 flex-col md:flex md:w-full md:items-center md:pt-4">
-          {/* <Recomend /> */}
+          <AnimeRecomend name={manga.name} />
         </aside>
         <div className="w-4/5 px-5 md:w-full md:px-0">
           <span className="lg:text-md text-xl font-semibold md:px-4">Chapters</span>
