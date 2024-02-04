@@ -18,10 +18,8 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const decodedName = decodeURIComponent(params.manka)
 
   const session = await getServerSession(authOptions)
-  const [manga, favorite] = await Promise.all([
-    getMangaByName(decodedName),
-    getUserFavorite(session?.user?.email as string, decodedName),
-  ])
+  const manga = await getMangaByName(decodedName)
+  const favorite = await getUserFavorite(session?.user?.email as string, decodedName)
 
   // const manga = await getMangaByName(decodedName)
 
