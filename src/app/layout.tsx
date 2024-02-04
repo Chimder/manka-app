@@ -3,12 +3,14 @@ import { Inter } from 'next/font/google'
 
 import './globals.css'
 
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { getServerSession } from 'next-auth'
 
 import AsideBar from '@/components/aside-bar'
+import SessionProvider from '@/components/providers/session-provider'
 import { ClientProvider } from '@/components/providers/tanstack-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
-import SessionProvider from '@/components/providers/session-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,6 +38,8 @@ export default async function RootLayout({
             <SessionProvider session={session}>
               <AsideBar />
               {children}
+              <SpeedInsights />
+              <Analytics />
             </SessionProvider>
           </ThemeProvider>
         </ClientProvider>
