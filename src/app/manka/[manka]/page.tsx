@@ -1,3 +1,5 @@
+// 'use server'
+
 import React from 'react'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -15,27 +17,25 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
   const decodedName = decodeURIComponent(params.manka)
 
-  const manga = await getMangaByName(decodedName)
   const session = await getServerSession(authOptions)
-  // const [manga, kkfavorite] = await Promise.all([
-  //   getUserFavorite(session?.user?.email as string, decodedName),
-  // ])
+  const [manga, favorite] = await Promise.all([
+    getMangaByName(decodedName),
+    getUserFavorite(session?.user?.email as string, decodedName),
+  ])
 
-  const addFavorite = async (name: string) => {
+  // const manga = await getMangaByName(decodedName)
+
+  const addFavorite = async (email: string, name: string) => {
     'use server'
-    if (!session?.user?.email) {
-      signIn()
-    } else {
-      await toggleUserFavoriteManga(session?.user?.email as string, name)
-      revalidatePath(`/manka/${name}`)
-    }
+    await toggleUserFavoriteManga(email, name)
+    revalidatePath(`/manka/${params.manka}`)
   }
 
   if (!manga) redirect('/')
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="overflow-x-hidden ">
-        <MangaInfo manga={manga} addFavorite={addFavorite} />
+        <MangaInfo manga={manga} addFavorite={addFavorite} favorite={favorite} />
         <MangaChapter manga={manga} />
       </main>
     </HydrationBoundary>
