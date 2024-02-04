@@ -27,7 +27,7 @@ const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
   const [isPending, startTransition] = useTransition()
   const isMobile = useWindowSize()
   const { data: session, status } = useSession()
-
+console.log("FAvoRite",favorite)
   return (
     <>
       <section className="max-h-[480px] lg:-z-10">

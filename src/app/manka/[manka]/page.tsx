@@ -20,6 +20,7 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const session = await getServerSession(authOptions)
   const manga = await getMangaByName(decodedName)
   const favorite = await getUserFavorite(session?.user?.email as string, decodedName)
+  console.log(session?.user?.email)
 
   // const manga = await getMangaByName(decodedName)
 

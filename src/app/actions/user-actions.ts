@@ -3,6 +3,9 @@
 import prisma from '@/shared/lib/prisma'
 
 export const isUser = (email: string) => {
+  if (!email) {
+    throw new Error('Email not found')
+  }
   return prisma.user.findUnique({
     where: {
       email: email,
@@ -10,6 +13,9 @@ export const isUser = (email: string) => {
   })
 }
 export const getUserFavorite = async (email: string) => {
+  if (!email) {
+    throw new Error('Email not found')
+  }
   return prisma.user.findFirst({
     where: { email: email },
     select: { favorite: true },
@@ -25,6 +31,9 @@ export const checkOrCreateUser = async (id: string, email: string, name: string,
 }
 
 export const toggleUserFavoriteManga = async (email: string, name: string) => {
+  if (!email) {
+    throw new Error('Email not found')
+  }
   const user = await getUserFavorite(email)
   if (!user) {
     throw new Error('User not found')
@@ -42,8 +51,8 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
     return prisma.user.update({
       where: { email: email },
       data: {
-      favorite: {
-        push: name,
+        favorite: {
+          push: name,
         },
       },
     })

@@ -99,6 +99,9 @@ export const addMangaRating = async (name: string, rating: number) => {
 }
 
 export const getUserFavorite = async (email: string, name: string) => {
+  if (!email) {
+    return null
+  }
   const user = await prisma.user.findFirst({
     where: { email: email },
     select: { favorite: true },
@@ -117,6 +120,9 @@ export const getUserFavorite = async (email: string, name: string) => {
 }
 
 export const getUserFavoriteManga = async (email: string) => {
+  if (!email) {
+    return []
+  }
   const user = await prisma.user.findFirst({
     where: { email: email },
     select: { favorite: true },
