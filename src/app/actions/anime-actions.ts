@@ -5,18 +5,43 @@ import axios from 'axios'
 // const ACCESS_TOKEN = process.env.KODIC_ACCESS_TOKEN
 
 export async function animeById(id: string) {
-  const config = {
-    params: {
-      token: process.env.KODIC_ACCESS_TOKEN,
-      id: id as string,
-      with_material_data: true,
-    },
+  try {
+    const config = {
+      params: {
+        token: process.env.KODIC_ACCESS_TOKEN,
+        id: id as string,
+        with_material_data: true,
+      },
+    }
+    const { data } = await axios.get('https://kodikapi.com/search', config)
+
+    console.log('ONIME', data)
+
+    return data.results[0]
+  } catch (error) {
+    console.error('Error in animeById:', error)
+    throw error
   }
-  const { data } = await axios.get('https://kodikapi.com/search', config)
+}
 
-  console.log('ONIME', data)
+export async function AnimeSearch(name: string) {
+  try {
+    const config = {
+      params: {
+        token: process.env.KODIC_ACCESS_TOKEN,
+        title: name as string,
+        strict: true,
+        with_material_data: true,
+        has_field: 'shikimori_id',
+      },
+    }
 
-  return data.results[0]
+    const { data } = await axios.get('https://kodikapi.com/search', config)
+    return data?.results[0]
+  } catch (error) {
+    console.error('Error in AnimeSearch:', error)
+    throw error
+  }
 }
 
 // const ACCESS_TOKEN = process.env.KODIC_ACCESS_TOKEN
@@ -44,18 +69,3 @@ export async function animeById(id: string) {
 //     res.status(error.response?.status || 500).json({ error: error.message })
 //   }
 // }
-
-export async function AnimeSearch(name: string) {
-  const config = {
-    params: {
-      token: process.env.KODIC_ACCESS_TOKEN,
-      title: name as string,
-      strict: true,
-      with_material_data: true,
-      has_field: 'shikimori_id',
-    },
-  }
-
-  const { data } = await axios.get('https://kodikapi.com/search', config)
-  return data?.results[0]
-}
