@@ -1,12 +1,16 @@
 'use client'
 
 import React, { useTransition } from 'react'
+import { revalidatePath } from 'next/cache'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
 import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { useQuery } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
 
+import { getUserFavorite } from '@/app/actions/manga-actions'
+import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
 
 import PublicationStatus from './publication-status'
 import RatingStars from './rating-stars'
@@ -16,12 +20,27 @@ import { Button } from './ui/button'
 type Props = {
   manga: Anime
   addFavorite: (name: string) => Promise<void>
-  favorite: any
+  // favorite: any
 }
 
-const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
+const MangaInfo = ({ manga, addFavorite }: Props) => {
   const isMobile = useWindowSize()
   const { data: session, status } = useSession()
+
+  const { data: favorite } = useQuery({
+    queryKey: ['isFavorite'],
+    queryFn: () => getUserFavorite(session?.user?.email as string, manga.name),
+  })
+
+  // const addFavorite = async (name: string) => {
+  //   'use server'
+  //   if (!session?.user?.email) {
+  //     signIn()
+  //   } else {
+  //     await toggleUserFavoriteManga(session?.user?.email as string, name)
+  //     revalidatePath(`/manka/${manga.name}`)
+  //   }
+  // }
   const [isPending, startTransition] = useTransition()
 
   return (
