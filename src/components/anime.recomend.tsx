@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { RecomendAnim } from '@/shared/data/PopRecod'
+import { QueryClient, useQuery } from '@tanstack/react-query'
 
 import { AnimeSearch } from '@/app/actions/anime-actions'
 
@@ -10,7 +11,12 @@ interface Props {
   name: string
 }
 const AnimeRecomend = async ({ name }: Props) => {
-  const anime = await AnimeSearch(name)
+  const queryClient = new QueryClient()
+
+  const anime = await queryClient.fetchQuery({
+    queryKey: ['recomend'],
+    queryFn: () => AnimeSearch(name),
+  })
 
   return (
     <div className=" z-100 -my-2  mt-0.5 flex-col md:my-2 md:flex-grow md:items-center md:justify-center ">
