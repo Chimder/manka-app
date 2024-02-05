@@ -26,7 +26,6 @@ export const getMangaByName = async (name: string) => {
   }
 }
 export type Anime = AsyncReturnType<typeof getMangaByName>
-
 export const getMangaChapter = async (name: string, chapter: number) => {
   try {
     return prisma.chapter.findFirst({
