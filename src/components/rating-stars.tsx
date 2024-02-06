@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Anime, AnimeWithChaper } from '@/shared/db/schema'
 // import { trpc } from '@/shared/utils/trpc'
-import { Anime } from '@prisma/client'
 import { StarFilledIcon } from '@radix-ui/react-icons'
 import { useMutation } from '@tanstack/react-query'
 
@@ -10,20 +10,23 @@ import { addMangaRating } from '@/app/actions/manga-actions'
 
 import { Alert, AlertDescription, AlertTitle } from './ui/alert'
 
-const RatingStars = ({ ...manga }: Anime) => {
+interface Props {
+  manga: Anime
+}
+const RatingStars = ({ manga }: Props) => {
   const [rating, setRating] = useState<number>(manga?.averageRating!)
   const [hover, setHover] = useState<number | null>(null)
   const [showNotification, setShowNotification] = useState(false)
 
   const { mutate } = useMutation({
     mutationKey: ['addRating'],
-    mutationFn: (newRating: number) => addMangaRating(manga.name, newRating),
+    mutationFn: (newRating: number) => addMangaRating(manga?.name, newRating),
     onSuccess: () => {
       setShowNotification(true)
       setTimeout(() => setShowNotification(false), 3000)
 
       const ratedAnimes = JSON.parse(localStorage.getItem('ratedAnimes') || '[]')
-      ratedAnimes.push(manga.name)
+      ratedAnimes.push(manga?.name)
       localStorage.setItem('ratedAnimes', JSON.stringify(ratedAnimes))
     },
   })
@@ -34,7 +37,7 @@ const RatingStars = ({ ...manga }: Anime) => {
   }
 
   const handleRatingClick = (newRating: number) => {
-    if (hasRatedAnime(manga.name)) {
+    if (hasRatedAnime(manga?.name)) {
       console.log('Вы уже оценили это аниме!')
       return
     }

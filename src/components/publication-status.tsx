@@ -5,7 +5,7 @@ import { Badge } from './ui/badge'
 
 type Props = {
   status: string
-  year: number | string
+  year: number | null
 }
 
 const PublicationStatus = ({ status, year }: Props) => {

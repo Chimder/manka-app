@@ -10,7 +10,12 @@ import { signIn } from 'next-auth/react'
 
 import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
-import { getMangaByName, getUserFavorite } from '@/app/actions/manga-actions'
+import {
+  getMangaByName,
+  getMangaByNameD,
+  getUserFavorite,
+  getUserFavoriteD,
+} from '@/app/actions/manga-actions'
 import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
@@ -18,11 +23,10 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const decodedName = decodeURIComponent(params.manka)
 
   const session = await getServerSession(authOptions)
-  const manga = await getMangaByName(decodedName)
-  const favorite = await getUserFavorite(session?.user?.email as string, decodedName)
-  console.log(session?.user?.email)
-
-  // const manga = await getMangaByName(decodedName)
+  const [manga, favorite] = await Promise.all([
+    getMangaByNameD(decodedName),
+    getUserFavoriteD(session?.user?.email as string, decodedName),
+  ])
 
   const addFavorite = async (email: string, name: string) => {
     'use server'

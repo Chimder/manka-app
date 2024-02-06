@@ -1,16 +1,11 @@
 'use client'
 
-import React, { useEffect, useTransition } from 'react'
-import { revalidatePath } from 'next/cache'
+import React, { useTransition } from 'react'
+import { Anime, AnimeWithChaper } from '@/shared/db/schema'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
-import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
-
-import { getUserFavorite } from '@/app/actions/manga-actions'
-import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
 
 import PublicationStatus from './publication-status'
 import RatingStars from './rating-stars'
@@ -27,7 +22,7 @@ const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
   const [isPending, startTransition] = useTransition()
   const isMobile = useWindowSize()
   const { data: session, status } = useSession()
-console.log("FAvoRite",favorite)
+  console.log('FAvoRite', favorite)
   return (
     <>
       <section className="max-h-[480px] lg:-z-10">
@@ -54,7 +49,7 @@ console.log("FAvoRite",favorite)
               <h1 className="relative flex px-5 py-0 text-3xl  drop-shadow-2xl lg:text-2xl md:px-2 md:text-lg md:text-white">
                 {manga?.name}
               </h1>
-              <RatingStars {...manga}></RatingStars>
+              <RatingStars manga={manga}></RatingStars>
             </div>
             <div className="relative my-2.5 ml-5 flex w-full flex-wrap items-center lg:ml-2 md:ml-1">
               <Button
@@ -75,7 +70,7 @@ console.log("FAvoRite",favorite)
                 {favorite ? 'Favorite' : 'Add To Favorite'}
                 {isPending && <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />}
               </Button>
-              {manga?.genres.map((genres, i: number) => (
+              {manga?.genres.map((genres: any, i: number) => (
                 <Badge
                   className="lg:-py-0 z-10 ml-3 cursor-default bg-badge text-white hover:bg-badge/70 lg:rounded-md lg:px-1 md:mt-2 sm:mt-1"
                   key={i}

@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1707210188027,
+      "tag": "0000_goofy_terror",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707210303323,
+      "tag": "0001_aromatic_spencer_smythe",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707214050164,
+      "tag": "0002_futuristic_ultimates",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707235390390,
+      "tag": "0003_curved_marvex",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1707239506290,
+      "tag": "0004_plain_nightcrawler",
+      "breakpoints": true
+    }
+  ]
+}

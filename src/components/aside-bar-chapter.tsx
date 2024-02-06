@@ -5,13 +5,11 @@ import { useParams } from 'next/navigation'
 import { Prisma } from '@prisma/client'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 
-import { Anime } from '@/app/actions/manga-actions'
-
 import DropDownN from './drop-down'
 import { Progress } from './ui/progress'
 
 interface Props {
-  manga: Anime
+  manga: any
   isSuccess?: boolean
 }
 
