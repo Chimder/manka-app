@@ -22,11 +22,9 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
   const decodedName = decodeURIComponent(params.manka)
 
+  const manga = await getMangaByNameD(decodedName)
   const session = await getServerSession(authOptions)
-  const [manga, favorite] = await Promise.all([
-    getMangaByNameD(decodedName),
-    getUserFavoriteD(session?.user?.email as string, decodedName),
-  ])
+  const favorite = await getUserFavoriteD(session?.user?.email as string, decodedName)
 
   const addFavorite = async (email: string, name: string) => {
     'use server'
