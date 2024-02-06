@@ -21,10 +21,10 @@ import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
 const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
   const decodedName = decodeURIComponent(params.manka)
-
   const manga = await getMangaByNameD(decodedName)
-  const session = await getServerSession(authOptions)
-  const favorite = await getUserFavoriteD(session?.user?.email as string, decodedName)
+
+  // const session = await getServerSession(authOptions)
+  // const favorite = await getUserFavoriteD(session?.user?.email as string, decodedName)
 
   const addFavorite = async (email: string, name: string) => {
     'use server'
@@ -36,7 +36,7 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="overflow-x-hidden ">
-        <MangaInfo manga={manga} addFavorite={addFavorite} favorite={favorite} />
+        <MangaInfo manga={manga} addFavorite={addFavorite} />
         <MangaChapter manga={manga} />
       </main>
     </HydrationBoundary>

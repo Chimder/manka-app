@@ -5,7 +5,10 @@ import { Anime, AnimeWithChaper } from '@/shared/db/schema'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { useQuery } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
+
+import { getUserFavoriteD } from '@/app/actions/manga-actions'
 
 import PublicationStatus from './publication-status'
 import RatingStars from './rating-stars'
@@ -15,14 +18,18 @@ import { Button } from './ui/button'
 type Props = {
   manga: Anime
   addFavorite: (email: string, name: string) => Promise<void>
-  favorite: any
+  // favorite: any
 }
 
-const MangaInfo = ({ manga, addFavorite, favorite }: Props) => {
+const MangaInfo = ({ manga, addFavorite }: Props) => {
   const [isPending, startTransition] = useTransition()
   const isMobile = useWindowSize()
   const { data: session, status } = useSession()
-  console.log('FAvoRite', favorite)
+
+  const { data: favorite, isFetching } = useQuery({
+    queryKey: ['fav'],
+    queryFn: () => getUserFavoriteD(session?.user?.email as string, manga.name),
+  })
   return (
     <>
       <section className="max-h-[480px] lg:-z-10">
