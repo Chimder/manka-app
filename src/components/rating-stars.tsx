@@ -1,14 +1,13 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Anime, AnimeWithChaper } from '@/shared/db/schema'
-// import { trpc } from '@/shared/utils/trpc'
 import { StarFilledIcon } from '@radix-ui/react-icons'
 import { useMutation } from '@tanstack/react-query'
 
 import { addMangaRating } from '@/app/actions/manga-actions'
 
 import { Alert, AlertDescription, AlertTitle } from './ui/alert'
+import { Anime } from '@prisma/client'
 
 interface Props {
   manga: Anime

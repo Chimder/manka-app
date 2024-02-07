@@ -26,7 +26,7 @@ export const getMangaByName = async (name: string) => {
   }
 }
 
-export type AnimeTest = AsyncReturnType<typeof getMangaByName>
+export type AnimeWithChapter = AsyncReturnType<typeof getMangaByName>
 
 export const getMangaChapter = async (name: string, chapter: number) => {
   try {

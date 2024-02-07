@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Anime } from '@/shared/db/schema'
 import useEmblaCarousel from 'embla-carousel-react'
+import { Anime } from '@prisma/client'
 
 interface Props {
   manga: Anime[]
