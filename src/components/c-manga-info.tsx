@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useTransition } from 'react'
-import { Anime, AnimeWithChaper } from '@/shared/db/schema'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
+import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
-import { signIn, useSession } from 'next-auth/react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 
-import { getUserFavoriteD } from '@/app/actions/manga-actions'
+import { getUserFavorite } from '@/app/actions/manga-actions'
 
 import PublicationStatus from './publication-status'
 import RatingStars from './rating-stars'
@@ -18,7 +18,6 @@ import { Button } from './ui/button'
 type Props = {
   manga: Anime
   addFavorite: (email: string, name: string) => Promise<void>
-  // favorite: any
 }
 
 const MangaInfo = ({ manga, addFavorite }: Props) => {
@@ -26,9 +25,16 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
   const isMobile = useWindowSize()
   const { data: session, status } = useSession()
 
-  const { data: favorite, isFetching } = useQuery({
-    queryKey: ['fav'],
-    queryFn: () => getUserFavoriteD(session?.user?.email as string, manga.name),
+  const { data: favorite, refetch } = useQuery({
+    queryKey: ['fav', manga.name],
+    queryFn: () => getUserFavorite(session?.user?.email as string, manga.name),
+  })
+  const { mutate } = useMutation({
+    mutationKey: ['addFavorite'],
+    mutationFn: () => addFavorite(session?.user?.email as string, manga.name),
+    onSuccess: () => {
+      refetch()
+    },
   })
   return (
     <>
@@ -63,8 +69,7 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
                 disabled={isPending}
                 onClick={() =>
                   startTransition(() => {
-                    if (!session?.user?.email) signIn()
-                    addFavorite(session?.user?.email as string, manga?.name as string)
+                    mutate()
                   })
                 }
                 className={cn(

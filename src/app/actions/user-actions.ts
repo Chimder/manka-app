@@ -21,10 +21,13 @@ export const getUserFavorite = async (email: string) => {
     if (!email) {
       throw new Error('Email not found')
     }
-    return prisma.user.findFirst({
+    console.log('EMAIL', email)
+    const user = await prisma.user.findFirst({
       where: { email: email },
       select: { favorite: true },
     })
+    console.log('FINDUSER', user)
+    return user
   } catch (error) {
     console.error('Error in getUserFavorite:', error)
     throw error
@@ -51,7 +54,8 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
       throw new Error('Email not found')
     }
     const user = await getUserFavorite(email)
-    if (!user) {
+    console.log('USERNOTFOUND', user)
+    if (!user?.favorite) {
       throw new Error('User not found')
     }
 

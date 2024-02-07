@@ -11,7 +11,6 @@ type Props = {
 }
 
 const MangaChapter = ({ manga }: Props) => {
-  console.log('CHAPERS', manga?.Chapter)
   return (
     <section className="containerM z-100 mx-auto h-full w-full bg-background pt-2.5 md:bg-transparent">
       <div className="flex md:flex-col ">
@@ -21,7 +20,7 @@ const MangaChapter = ({ manga }: Props) => {
         <div className="w-4/5 px-5 md:w-full md:px-0">
           <span className="lg:text-md text-xl font-semibold md:px-4">Chapters</span>
           <div className="pt-3 md:px-4 md:pb-14">
-            {manga?.Chapter?.map((chap: any) => (
+            {manga?.chapters?.map((chap: any) => (
               <Link
                 className="my-2 flex items-center justify-between rounded-sm bg-accent p-4 md:my-1 md:py-3"
                 key={chap.name}

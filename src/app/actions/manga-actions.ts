@@ -1,16 +1,11 @@
 'use server'
 
-import { db } from '@/shared/db'
-import { Chapter, Users } from '@/shared/db/schema'
 import prisma from '@/shared/lib/prisma'
-import { eq, like } from 'drizzle-orm'
 import type { AsyncReturnType } from 'type-fest'
-
 
 export const getAllMangaD = async () => {
   try {
-    const prepareManga = db.query.Anime.findMany({ with: { Chapter: true } }).prepare('Manga')
-    const manga = await prepareManga.execute()
+    const manga = await prisma.anime.findMany({ include: { chapters: true } })
     return manga
   } catch (error) {
     console.error('Error in getAllManga:', error)
@@ -18,23 +13,6 @@ export const getAllMangaD = async () => {
   }
 }
 
-export const getMangaByNameD = async (name: string) => {
-  try {
-    // const manga = await db
-    //   .select()
-    //   .from(Anime)
-    //   .where(like(Anime.name, `%${name}%`))
-    const manga = await db.query.Anime.findFirst({
-      with: { Chapter: true },
-      where: (Anime, { like }) => like(Anime.name, name),
-    })
-
-    return manga
-  } catch (error) {
-    console.error('Error in getMangaByName:', error)
-    throw error
-  }
-}
 export const getMangaByName = async (name: string) => {
   try {
     const manga = await prisma.anime.findFirst({
@@ -64,22 +42,6 @@ export const getMangaChapter = async (name: string, chapter: number) => {
   }
 }
 
-export const getMangaPopularD = async () => {
-  try {
-    const prepare = db.query.Anime.findMany({
-      limit: 10,
-      orderBy: (Anime, { desc }) => [desc(Anime.popularity)],
-    }).prepare('Pop')
-    return prepare.execute()
-    // return prisma.anime.findMany({
-    //   take: 10,
-    //   orderBy: { popularity: { sort: 'desc' } },
-    // })
-  } catch (error) {
-    console.error('Error in getMangaPopular:', error)
-    throw error
-  }
-}
 export const getMangaPopular = async () => {
   try {
     return prisma.anime.findMany({
@@ -168,34 +130,6 @@ export const addMangaRating = async (name: string, rating: number) => {
   }
 }
 
-export const getUserFavoriteD = async (email: string, name: string) => {
-  try {
-    if (!email) {
-      return null
-    }
-    const prepareUser = db.query.Users.findFirst({ where: eq(Users.name, name) }).prepare(
-      'user-First',
-    )
-    const user = await prepareUser.execute()
-
-    if (!user?.favorite || user?.favorite.length === 0) {
-      return null
-    }
-    const prepareFavoriteList = db.query.Anime.findMany({
-      with: { Chapter: true },
-      where: (Anime, { ilike }) => ilike(Anime.name, `%${user.favorite}%`),
-    }).prepare('FavList')
-
-    const favoriteList = await prepareFavoriteList.execute()
-
-    const favoriteNames = favoriteList.map((anime: { name: string }) => anime.name)
-
-    return favoriteNames.includes(name)
-  } catch (error) {
-    console.error('Error in getUserFavorite:', error)
-    throw error
-  }
-}
 export const getUserFavorite = async (email: string, name: string) => {
   try {
     if (!email) {
