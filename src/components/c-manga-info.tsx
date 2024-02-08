@@ -41,9 +41,10 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
     <>
       <section className="max-h-[480px] lg:-z-10">
         <div className="absolute left-0 top-[-80px] z-[-2] h-[640px] w-full">
-          <img
+          <Image
             className="z-0 h-full w-full "
             src={isMobile ? manga?.img : manga?.imgHeader}
+            fill={true}
             alt="ImgHeader"
           />
           <div className="absolute inset-x-0 bottom-0 h-full bg-black/30 lg:z-40 lg:backdrop-blur-[1px] md:bg-gradient-light dark:md:bg-gradient-dark"></div>
