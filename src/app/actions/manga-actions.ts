@@ -1,8 +1,16 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import prisma from '@/shared/lib/prisma'
 import type { AsyncReturnType } from 'type-fest'
 
+import { toggleUserFavoriteManga } from './user-actions'
+
+export const addFavorite = async (email: string, name: string) => {
+  // 'use server'
+  await toggleUserFavoriteManga(email, name)
+  revalidatePath('/favorite')
+}
 export const getAllMangaD = async () => {
   try {
     const manga = await prisma.anime.findMany({ include: { chapters: true } })

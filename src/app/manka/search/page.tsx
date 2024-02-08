@@ -7,8 +7,8 @@ import useStore from '@/shared/Store/useStore'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { BadgeList } from '@/components/badge-list'
-import { DropDownMenuN } from '@/components/drop-down-menu'
 import { MangaList } from '@/components/c-manga-list'
+import { DropDownMenuN } from '@/components/drop-down-menu'
 
 function mangaSearch() {
   const filter = useStore(useFiLter, state => state)
@@ -24,6 +24,7 @@ function mangaSearch() {
       filter?.setSort(tag)
     }
   }
+
   const on = (e: React.MouseEvent<HTMLButtonElement>, category: string) => {
     const button = e.target as HTMLButtonElement
     handleTag(button.innerText, category)

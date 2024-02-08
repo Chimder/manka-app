@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useTransition } from 'react'
-import Image from 'next/image'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
 import { Anime } from '@prisma/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 import { getUserFavorite } from '@/app/actions/manga-actions'
 
@@ -70,6 +69,7 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
                 disabled={isPending}
                 onClick={() =>
                   startTransition(() => {
+                    if (!session?.user?.email) signIn()
                     mutate()
                   })
                 }
@@ -93,6 +93,7 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
               ))}
               <PublicationStatus year={manga?.published} status={manga?.status} />
             </div>
+
             <div className="mx-5 text-lg xl:text-[16px] lg:text-sm md:hidden">
               {manga?.describe}
             </div>
