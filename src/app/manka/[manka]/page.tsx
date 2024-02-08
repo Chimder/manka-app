@@ -1,13 +1,17 @@
 // 'use server'
 
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { redirect } from 'next/navigation'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import MangaChapter from '@/components/c-manga-chapter'
-import MangaInfo from '@/components/c-manga-info'
+// import MangaChapter from '@/components/c-manga-chapter'
+// import MangaInfo from '@/components/c-manga-info'
 import { getMangaByName } from '@/app/actions/manga-actions'
 import { toggleUserFavoriteManga } from '@/app/actions/user-actions'
+
+const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
+const MangaInfo = dynamic(() => import('@/components/c-manga-info'))
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()

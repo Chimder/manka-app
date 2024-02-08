@@ -8,7 +8,6 @@ import { ScrollMost } from '@/components/scroll-most'
 import { getMangaPopular } from './actions/manga-actions'
 
 export default async function Home() {
-
   const manga = await getMangaPopular()
 
   return (

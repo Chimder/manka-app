@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import useEmblaCarousel from 'embla-carousel-react'
 import { Anime } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
+import useEmblaCarousel from 'embla-carousel-react'
 
 interface Props {
   manga: Anime[]
