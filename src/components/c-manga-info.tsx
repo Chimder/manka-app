@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useTransition } from 'react'
+import Image from 'next/image'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
 import { Anime } from '@prisma/client'
@@ -43,7 +44,7 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
           <img
             className="z-0 h-full w-full "
             src={isMobile ? manga?.img : manga?.imgHeader}
-            alt=""
+            alt="ImgHeader"
           />
           <div className="absolute inset-x-0 bottom-0 h-full bg-black/30 lg:z-40 lg:backdrop-blur-[1px] md:bg-gradient-light dark:md:bg-gradient-dark"></div>
         </div>
