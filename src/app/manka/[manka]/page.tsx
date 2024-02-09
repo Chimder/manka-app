@@ -15,6 +15,8 @@ export async function generateStaticParams() {
     manka: manga.name,
   }))
 }
+// export const dynamic = 'force-static'
+export const dynamicParams = true
 export const revalidate = 120
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
