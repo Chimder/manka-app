@@ -14,9 +14,10 @@ export async function generateStaticParams() {
     manka: manga.name,
   }))
 }
+export const dynamic = 'force-static'
 export const revalidate = 120
 
-const Manga = cache(async ({ params }: { params: { manka: string } }) => {
+const Manga = async ({ params }: { params: { manka: string } }) => {
   const manga = await getMangaByName(params.manka)
 
   if (!manga) redirect('/')
@@ -26,6 +27,6 @@ const Manga = cache(async ({ params }: { params: { manka: string } }) => {
       <MangaChapter manga={manga} />
     </main>
   )
-})
+}
 
 export default Manga
