@@ -15,8 +15,7 @@ export default async function ChapterLayout({
     chapter: string
   }
 }>) {
-  const decodedName = decodeURIComponent(params?.manka)
-  const manga = await getMangaByName(decodedName)
+  const manga = await getMangaByName(params?.manka)
   if (!manga) redirect('/')
   return (
     <>

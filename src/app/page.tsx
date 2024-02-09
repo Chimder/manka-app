@@ -1,4 +1,3 @@
-'use server'
 
 import React from 'react'
 
@@ -6,6 +5,10 @@ import { Scroll } from '@/components/scroll'
 import { ScrollMost } from '@/components/scroll-most'
 
 import { getMangaPopular } from './actions/manga-actions'
+
+export const dynamic = 'force-static'
+
+export const revalidate = 60
 
 export default async function Home() {
   const manga = await getMangaPopular()

@@ -27,10 +27,10 @@ export const getAllMangaD = cache(async () => {
 })
 
 export const getMangaByName = async (name: string) => {
-  // const decodename = decodeURIComponent(name)
+  const decodename = decodeURIComponent(name)
   try {
     const manga = await prisma.anime.findFirst({
-      where: { name: { contains: name, mode: 'insensitive' } },
+      where: { name: { contains: decodename, mode: 'insensitive' } },
       include: { chapters: true },
     })
     return manga
@@ -56,7 +56,7 @@ export const getMangaChapter = async (name: string, chapter: number) => {
   }
 }
 
-export const getMangaPopular = async () => {
+export const getMangaPopular =cache( async () => {
   try {
     return prisma.anime.findMany({
       take: 10,
@@ -66,7 +66,7 @@ export const getMangaPopular = async () => {
     console.error('Error in getMangaPopular:', error)
     throw error
   }
-}
+})
 
 export const getMangaByGenres = async (
   genres?: string[],

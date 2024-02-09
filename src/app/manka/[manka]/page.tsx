@@ -15,13 +15,12 @@ export async function generateStaticParams() {
     manka: manga.name,
   }))
 }
-
 export const revalidate = 120
 
 const Manga = cache(async ({ params }: { params: { manka: string } }) => {
   // const queryClient = new QueryClient()
   // const decodedName = decodeURIComponent(params.manka)
-  const manga = await getMangaByName(decodeURIComponent(params.manka))
+  const manga = await getMangaByName(params.manka)
 
   if (!manga) redirect('/')
   return (
