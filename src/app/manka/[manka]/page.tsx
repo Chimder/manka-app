@@ -1,24 +1,18 @@
 // 'use server'
 
 import React, { cache } from 'react'
-// import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
 import { redirect } from 'next/navigation'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import MangaChapter from '@/components/c-manga-chapter'
+// import MangaChapter from '@/components/c-manga-chapter'
 // import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
 import { addFavorite, getMangaByName } from '@/app/actions/manga-actions'
 
-// const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
+const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
 
-// export const addFavorite = async (email: string, name: string) => {
-//   'use server'
-//   await toggleUserFavoriteManga(email, name)
-//   revalidatePath('/favorite')
-// }
 // export const revalidate = 60
-export const dynamic = 'force-static'
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()

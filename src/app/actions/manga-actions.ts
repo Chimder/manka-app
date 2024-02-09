@@ -1,7 +1,7 @@
 'use server'
 
 import { cache } from 'react'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, unstable_cache } from 'next/cache'
 import prisma from '@/shared/lib/prisma'
 import type { AsyncReturnType } from 'type-fest'
 
@@ -25,18 +25,22 @@ export const getAllMangaD = async () => {
   }
 }
 
-export const getMangaByName = async (name: string) => {
-  try {
-    const manga = await prisma.anime.findFirst({
-      where: { name: { contains: name, mode: 'insensitive' } },
-      include: { chapters: true },
-    })
-    return manga
-  } catch (error) {
-    console.error('Error in getMangaByName:', error)
-    throw error
-  }
-}
+export const getMangaByName = unstable_cache(
+  async (name: string) => {
+    try {
+      const manga = await prisma.anime.findFirst({
+        where: { name: { contains: name, mode: 'insensitive' } },
+        include: { chapters: true },
+      })
+      return manga
+    } catch (error) {
+      console.error('Error in getMangaByName:', error)
+      throw error
+    }
+  },
+  ['getMM'],
+  { tags: ['mm'] },
+)
 
 export type AnimeWithChapter = AsyncReturnType<typeof getMangaByName>
 
