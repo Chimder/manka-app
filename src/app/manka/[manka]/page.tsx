@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 }
 export const revalidate = 120
 
-const Manga = cache(async ({ params }: { params: { manka: string } }) => {
+const Manga = async ({ params }: { params: { manka: string } }) => {
   // const queryClient = new QueryClient()
   // const decodedName = decodeURIComponent(params.manka)
   const manga = await getMangaByName(params.manka)
@@ -31,6 +31,6 @@ const Manga = cache(async ({ params }: { params: { manka: string } }) => {
     </main>
     // </HydrationBoundary>
   )
-})
+}
 
 export default Manga
