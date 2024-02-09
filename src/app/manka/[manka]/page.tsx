@@ -9,8 +9,9 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 // import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
 import { addFavorite, getAllMangaD, getMangaByName } from '@/app/actions/manga-actions'
+import MangaChapter from '@/components/c-manga-chapter'
 
-const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
+// const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
 
 export async function generateStaticParams() {
   const mangas = await getAllMangaD()

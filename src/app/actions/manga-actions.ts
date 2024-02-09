@@ -16,7 +16,7 @@ export const testFavorite = async () => {
   console.log()
 }
 
-export const getAllMangaD = async () => {
+export const getAllMangaD = cache(async () => {
   try {
     const manga = await prisma.anime.findMany({ include: { chapters: true } })
     return manga
@@ -24,7 +24,7 @@ export const getAllMangaD = async () => {
     console.error('Error in getAllManga:', error)
     throw error
   }
-}
+})
 
 export const getMangaByName = async (name: string) => {
   try {
