@@ -25,22 +25,18 @@ export const getAllMangaD = async () => {
   }
 }
 
-export const getMangaByName = unstable_cache(
-  async (name: string) => {
-    try {
-      const manga = await prisma.anime.findFirst({
-        where: { name: { contains: name, mode: 'insensitive' } },
-        include: { chapters: true },
-      })
-      return manga
-    } catch (error) {
-      console.error('Error in getMangaByName:', error)
-      throw error
-    }
-  },
-  ['getMM'],
-  { tags: ['mm'] },
-)
+export const getMangaByName = async (name: string) => {
+  try {
+    const manga = await prisma.anime.findFirst({
+      where: { name: { contains: name, mode: 'insensitive' } },
+      include: { chapters: true },
+    })
+    return manga
+  } catch (error) {
+    console.error('Error in getMangaByName:', error)
+    throw error
+  }
+}
 
 export type AnimeWithChapter = AsyncReturnType<typeof getMangaByName>
 
