@@ -27,6 +27,7 @@ export const getAllMangaD = cache(async () => {
 })
 
 export const getMangaByName = async (name: string) => {
+  // const decodename = decodeURIComponent(name)
   try {
     const manga = await prisma.anime.findFirst({
       where: { name: { contains: name, mode: 'insensitive' } },
