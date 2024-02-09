@@ -5,12 +5,12 @@ const pages = [
     img2: "/img/Logo/One-Punch-Man.webp",
     desc: "After rigorously training for three years, the ordinary Saitama has gained immense strength which allows him to take out anyone and anything with just...",
   },
-  {
-    name: "The Rising of the Shield Hero",
-    img: "/img/MainTop/SH.webp",
-    img2: "/img/Logo/TheRisingoftheShieldHero.webp",
-    desc: "Naofumi Iwatani, an uncharismatic Otaku who spends his days on games and manga, suddenly finds himself summoned to a parallel universe! He discovers he is one of four heroes equipped with legendary weapons and tasked with saving the world from its prophesied destruction",
-  },
+  // {
+  //   name: "The Rising of the Shield Hero",
+  //   img: "/img/MainTop/SH.webp",
+  //   img2: "/img/Logo/TheRisingoftheShieldHero.webp",
+  //   desc: "Naofumi Iwatani, an uncharismatic Otaku who spends his days on games and manga, suddenly finds himself summoned to a parallel universe! He discovers he is one of four heroes equipped with legendary weapons and tasked with saving the world from its prophesied destruction",
+  // },
   {
     name: "Berserk",
     img: "/img/MainTop/BS.webp",

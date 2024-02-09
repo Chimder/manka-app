@@ -1,5 +1,6 @@
 'use server'
 
+import { cache } from 'react'
 import { revalidatePath } from 'next/cache'
 import prisma from '@/shared/lib/prisma'
 import type { AsyncReturnType } from 'type-fest'
@@ -11,6 +12,9 @@ export const addFavorite = async (email: string, name: string) => {
   await toggleUserFavoriteManga(email, name)
   revalidatePath('/favorite')
 }
+export const testFavorite = async () => {
+  console.log()
+}
 export const getAllMangaD = async () => {
   try {
     const manga = await prisma.anime.findMany({ include: { chapters: true } })
@@ -21,7 +25,7 @@ export const getAllMangaD = async () => {
   }
 }
 
-export const getMangaByName = async (name: string) => {
+export const getMangaByName = cache(async (name: string) => {
   try {
     const manga = await prisma.anime.findFirst({
       where: { name: { contains: name, mode: 'insensitive' } },
@@ -32,7 +36,7 @@ export const getMangaByName = async (name: string) => {
     console.error('Error in getMangaByName:', error)
     throw error
   }
-}
+})
 
 export type AnimeWithChapter = AsyncReturnType<typeof getMangaByName>
 
