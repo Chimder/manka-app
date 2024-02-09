@@ -15,6 +15,7 @@ export const addFavorite = async (email: string, name: string) => {
 export const testFavorite = async () => {
   console.log()
 }
+
 export const getAllMangaD = async () => {
   try {
     const manga = await prisma.anime.findMany({ include: { chapters: true } })

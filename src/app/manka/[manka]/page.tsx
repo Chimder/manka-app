@@ -8,13 +8,20 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 // import MangaChapter from '@/components/c-manga-chapter'
 // import MangaChapter from '@/components/c-manga-chapter'
 import MangaInfo from '@/components/c-manga-info'
-import { addFavorite, getMangaByName } from '@/app/actions/manga-actions'
+import { addFavorite, getAllMangaD, getMangaByName } from '@/app/actions/manga-actions'
 
 const MangaChapter = dynamic(() => import('@/components/c-manga-chapter'))
 
-// export const revalidate = 60
+export async function generateStaticParams() {
+  const mangas = await getAllMangaD()
+  return mangas.map(manga => ({
+    manka: manga.name,
+  }))
+}
 
-const Manga = async ({ params }: { params: { manka: string } }) => {
+export const revalidate = 120
+
+const Manga = cache(async ({ params }: { params: { manka: string } }) => {
   const queryClient = new QueryClient()
   const decodedName = decodeURIComponent(params.manka)
   const manga = await getMangaByName(decodedName)
@@ -28,6 +35,6 @@ const Manga = async ({ params }: { params: { manka: string } }) => {
       </main>
     </HydrationBoundary>
   )
-}
+})
 
 export default Manga
