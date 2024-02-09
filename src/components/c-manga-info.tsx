@@ -8,8 +8,7 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
 
-import { getUserFavorite } from '@/app/actions/manga-actions'
-import { toggleUserFavoriteMangaTest } from '@/app/actions/user-actions'
+import { addFavorite, getUserFavorite } from '@/app/actions/manga-actions'
 
 import PublicationStatus from './publication-status'
 import RatingStars from './rating-stars'
@@ -18,13 +17,12 @@ import { Button } from './ui/button'
 
 type Props = {
   manga: Anime
-  addFavorite: (email: string, name: string) => Promise<void>
 }
 
-const MangaInfo = ({ manga, addFavorite }: Props) => {
+const MangaInfo = ({ manga }: Props) => {
   const [isPending, startTransition] = useTransition()
   const isMobile = useWindowSize()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   const { data: favorite, refetch } = useQuery({
     queryKey: ['fav', manga],
@@ -67,12 +65,6 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
               <RatingStars manga={manga}></RatingStars>
             </div>
 
-            {/* <form
-              action={toggleUserFavoriteMangaTest}
-              className="relative my-2.5 ml-5 flex w-full flex-wrap items-center lg:ml-2 md:ml-1"
-            > */}
-            {/* <input type="hidden" name="email" value={session?.user?.email as string} />
-              <input type="hidden" name="name" value={manga?.name} /> */}
             <div className="relative my-2.5 ml-5 flex w-full flex-wrap items-center lg:ml-2 md:ml-1">
               <Button
                 type="submit"
@@ -103,7 +95,6 @@ const MangaInfo = ({ manga, addFavorite }: Props) => {
               ))}
               <PublicationStatus year={manga?.published} status={manga?.status} />
             </div>
-            {/* </form> */}
 
             <div className="mx-5 text-lg xl:text-[16px] lg:text-sm md:hidden">
               {manga?.describe}

@@ -1,11 +1,8 @@
-'use server'
-
 import React from 'react'
 import Link from 'next/link'
 import { formatCreatedAt } from '@/shared/lib/data-format'
 
 import AnimeRecomend from './anime.recomend'
-
 
 type Props = {
   manga: any
