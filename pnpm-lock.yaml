@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@prisma/client':
+    specifier: ^5.9.1
+    version: 5.9.1(prisma@5.9.1)
   '@radix-ui/react-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.2.19)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
@@ -53,9 +56,6 @@ dependencies:
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
-  prisma:
-    specifier: ^5.9.1
-    version: 5.9.1
   react:
     specifier: ^18
     version: 18.2.0
@@ -88,9 +88,6 @@ devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
     specifier: ^4.1.1
     version: 4.1.1(prettier@3.2.5)
-  '@prisma/client':
-    specifier: ^5.9.1
-    version: 5.9.1(prisma@5.9.1)
   '@tanstack/eslint-plugin-query':
     specifier: ^5.17.20
     version: 5.20.1(eslint@8.56.0)(typescript@5.3.3)
@@ -133,6 +130,9 @@ devDependencies:
   prettier-plugin-tailwindcss:
     specifier: ^0.5.11
     version: 0.5.11(@ianvs/prettier-plugin-sort-imports@4.1.1)(prettier@3.2.5)
+  prisma:
+    specifier: ^5.9.1
+    version: 5.9.1
   tailwindcss:
     specifier: ^3.3.0
     version: 3.4.1
@@ -619,7 +619,7 @@ packages:
         optional: true
     dependencies:
       prisma: 5.9.1
-    dev: true
+    dev: false
 
   /@prisma/debug@5.9.1:
     resolution: {integrity: sha512-yAHFSFCg8KVoL0oRUno3m60GAjsUKYUDkQ+9BA2X2JfVR3kRVSJFc/GpQ2fSORi4pSHZR9orfM4UC9OVXIFFTA==}

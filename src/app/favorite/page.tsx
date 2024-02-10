@@ -1,5 +1,5 @@
 import React from 'react'
-import { revalidatePath } from 'next/cache'
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import authOptions from '@/shared/lib/options'
 import { getServerSession } from 'next-auth'
@@ -7,12 +7,14 @@ import { getServerSession } from 'next-auth'
 import FavoriteList from '@/components/c-user-favorite-manga'
 
 import { getUserFavoriteManga } from '../actions/manga-actions'
-// export const dynamic = 'force-dynamic'
-// export const revalidate = 0
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 type Props = {}
 
 const Favorite = async () => {
+  noStore()
   const session = await getServerSession(authOptions)
   const favorite = await getUserFavoriteManga(session?.user?.email as string)
 

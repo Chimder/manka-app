@@ -1,7 +1,7 @@
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
-import prisma from './prisma'
+import {prisma} from './prisma'
 
 export const authOptions: AuthOptions = {
   providers: [

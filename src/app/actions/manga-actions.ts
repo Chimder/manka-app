@@ -2,7 +2,7 @@
 
 import { cache } from 'react'
 import { revalidatePath, unstable_cache } from 'next/cache'
-import prisma from '@/shared/lib/prisma'
+import {prisma} from '@/shared/lib/prisma'
 import type { AsyncReturnType } from 'type-fest'
 
 import { toggleUserFavoriteManga } from './user-actions'

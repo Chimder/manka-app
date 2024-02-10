@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { unstable_noStore as noStore } from 'next/cache'
 import { useFiLter } from '@/shared/Store/filter'
 import useStore from '@/shared/Store/useStore'
 
@@ -12,6 +13,7 @@ import { DropDownMenuN } from '@/components/drop-down-menu'
 
 export const dynamic = 'force-dynamic'
 function mangaSearch() {
+  noStore()
   const filter = useStore(useFiLter, state => state)
 
   const handleTag = (tag: string, category: string) => {

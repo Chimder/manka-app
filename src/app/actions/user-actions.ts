@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import prisma from '@/shared/lib/prisma'
+import {prisma} from '@/shared/lib/prisma'
 import { z } from 'zod'
 
 export const isUser = async (email: string) => {
