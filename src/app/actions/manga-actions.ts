@@ -16,7 +16,7 @@ export const testFavorite = async () => {
   console.log()
 }
 
-export const getAllMangaD = cache(async () => {
+export const getAllMangaD = async () => {
   try {
     const manga = await prisma.anime.findMany({ include: { chapters: true } })
     return manga
@@ -24,9 +24,9 @@ export const getAllMangaD = cache(async () => {
     console.error('Error in getAllManga:', error)
     throw error
   }
-})
+}
 
-export const getMangaByName = cache(async (name: string) => {
+export const getMangaByName = async (name: string) => {
   const decodename = decodeURIComponent(name)
   try {
     const manga = await prisma.anime.findFirst({
@@ -38,7 +38,7 @@ export const getMangaByName = cache(async (name: string) => {
     console.error('Error in getMangaByName:', error)
     throw error
   }
-})
+}
 
 export type AnimeWithChapter = AsyncReturnType<typeof getMangaByName>
 

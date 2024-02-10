@@ -1,5 +1,3 @@
-// 'use server'
-
 import React from 'react'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -9,9 +7,8 @@ import { getServerSession } from 'next-auth'
 import FavoriteList from '@/components/c-user-favorite-manga'
 
 import { getUserFavoriteManga } from '../actions/manga-actions'
-
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// export const dynamic = 'force-dynamic'
+// export const revalidate = 0
 
 type Props = {}
 
