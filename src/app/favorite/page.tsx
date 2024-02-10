@@ -15,6 +15,7 @@ type Props = {}
 const Favorite = async () => {
   const session = await getServerSession(authOptions)
   const favorite = await getUserFavoriteManga(session?.user?.email as string)
+  
 
   if (!session?.user?.email) {
     revalidatePath('/favorite') // Update cached posts

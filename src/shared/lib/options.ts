@@ -12,18 +12,24 @@ export const authOptions: AuthOptions = {
   ],
 
   callbacks: {
-    async signIn({ user }: any) {
-      const isUser = await prisma.user.findUnique({
+    async signIn({ account, profile }: any) {
+      if (!profile?.email) {
+        throw new Error('no profile')
+      }
+      console.log('PROFILE', profile)
+      await prisma.user.upsert({
         where: {
-          email: user?.email,
+          email: profile.email,
+        },
+        create: {
+          email: profile.email,
+          name: profile.name,
+          image: profile.picture,
+        },
+        update: {
+          name: profile.name,
         },
       })
-
-      if (!isUser) {
-        await prisma.user.create({ data: user })
-      } else {
-        console.log('already created')
-      }
       return true
     },
   },

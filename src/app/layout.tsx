@@ -8,7 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { getServerSession } from 'next-auth'
 
 import AsideBar from '@/components/aside-bar'
-import SessionProvider from '@/components/providers/session-provider'
+import { ProviderAuth } from '@/components/providers/session-provider'
 import { ClientProvider } from '@/components/providers/tanstack-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 
@@ -24,7 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await getServerSession()
+  // const session = await getServerSession()
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -35,12 +35,12 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SessionProvider session={session}>
+            <ProviderAuth>
               <AsideBar />
               {children}
               <SpeedInsights />
               <Analytics />
-            </SessionProvider>
+            </ProviderAuth>
           </ThemeProvider>
         </ClientProvider>
       </body>
