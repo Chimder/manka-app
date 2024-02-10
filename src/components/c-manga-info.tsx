@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useTransition } from 'react'
+import { usePathname } from 'next/navigation'
 import useWindowSize from '@/shared/lib/isMobile'
 import { cn } from '@/shared/lib/utils'
 import { Anime } from '@prisma/client'
@@ -23,11 +24,14 @@ const MangaInfo = ({ manga }: Props) => {
   const [isPending, startTransition] = useTransition()
   const isMobile = useWindowSize()
   const { data: session } = useSession()
+  const path = usePathname()
 
   const { data: favorite, refetch } = useQuery({
-    queryKey: ['fav', manga],
+    queryKey: ['fav', path],
     queryFn: () => getUserFavorite(session?.user?.email as string, manga.name),
+    enabled: !!session,
     staleTime: 0,
+    // refetchOnMount: true,
   })
   const { mutate } = useMutation({
     mutationKey: ['addFavorite'],
@@ -36,6 +40,7 @@ const MangaInfo = ({ manga }: Props) => {
       refetch()
     },
   })
+  console.log('Fav', favorite)
   return (
     <>
       <section className="max-h-[480px] lg:-z-10">

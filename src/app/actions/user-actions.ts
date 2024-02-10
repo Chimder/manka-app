@@ -25,12 +25,10 @@ export const getUserFavorite = async (email: string) => {
     if (!email) {
       throw new Error('Email not found')
     }
-    console.log('EMAIL', email)
     const user = await prisma.user.findFirst({
       where: { email: email },
       select: { favorite: true },
     })
-    console.log('FINDUSER', user)
     return user
   } catch (error) {
     console.error('Error in getUserFavorite:', error)
@@ -53,7 +51,6 @@ export const checkOrCreateUser = async (id: string, email: string, name: string,
 }
 
 export const toggleUserFavoriteMangaTest = async (formData: FormData) => {
-  console.log('Formadata', formData)
   const schema = z.object({
     email: z.string().email(),
     name: z.string(),
@@ -69,7 +66,6 @@ export const toggleUserFavoriteMangaTest = async (formData: FormData) => {
       throw new Error('Email not found')
     }
     const user = await getUserFavorite(email)
-    console.log('USERNOTFOUND', user)
     if (!user?.favorite) {
       throw new Error('User not found')
     }
@@ -113,7 +109,6 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
       throw new Error('Email not found')
     }
     const user = await getUserFavorite(email)
-    console.log('USERNOTFOUND', user)
     if (!user?.favorite) {
       throw new Error('User not found')
     }
@@ -153,13 +148,11 @@ export const toggleUserFavoriteManga = async (email: string, name: string) => {
 
 export const deleteUserAccount = async (email: string) => {
   try {
-    console.log('USeRDELETE', email)
     const user = await prisma.user.findUnique({
       where: {
         email: email,
       },
     })
-    console.log('USER', user)
     if (!user) {
       return console.log('User not found')
     }

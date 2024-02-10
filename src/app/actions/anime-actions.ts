@@ -15,7 +15,6 @@ export async function animeById(id: string) {
     }
     const { data } = await axios.get('https://kodikapi.com/search', config)
 
-    console.log('ONIME', data)
 
     return data.results[0]
   } catch (error) {

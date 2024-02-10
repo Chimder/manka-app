@@ -16,7 +16,6 @@ export const authOptions: AuthOptions = {
       if (!profile?.email) {
         throw new Error('no profile')
       }
-      console.log('PROFILE', profile)
       await prisma.user.upsert({
         where: {
           email: profile.email,

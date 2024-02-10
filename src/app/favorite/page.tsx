@@ -1,4 +1,4 @@
-'use server'
+// 'use server'
 
 import React from 'react'
 import { revalidatePath } from 'next/cache'
@@ -10,19 +10,19 @@ import FavoriteList from '@/components/c-user-favorite-manga'
 
 import { getUserFavoriteManga } from '../actions/manga-actions'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {}
 
 const Favorite = async () => {
   const session = await getServerSession(authOptions)
   const favorite = await getUserFavoriteManga(session?.user?.email as string)
-  
 
   if (!session?.user?.email) {
     revalidatePath('/favorite') // Update cached posts
     redirect('/')
   }
 
-  console.log('USERFAVORITE', favorite)
   return (
     <section className="containerM overflow-x-hidden">
       <h1 className="py-4 text-3xl">Favorite Manga</h1>

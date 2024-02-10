@@ -60,7 +60,6 @@ export const MangaList = () => {
     filter?.inputValue,
     refetch,
   ])
-   console.log("GAMES",mangas)
 
   const { ref, inView } = useInView()
   useEffect(() => {
