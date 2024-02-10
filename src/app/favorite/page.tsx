@@ -11,6 +11,7 @@ import FavoriteList from '@/components/c-user-favorite-manga'
 import { getUserFavoriteManga } from '../actions/manga-actions'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 type Props = {}
 
