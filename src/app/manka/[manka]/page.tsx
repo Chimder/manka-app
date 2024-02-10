@@ -14,11 +14,10 @@ export async function generateStaticParams() {
     manka: manga.name,
   }))
 }
-export const revalidate = 120
+// export const revalidate = 120
 // export const dynamic = 'force-static'
 
 const Manga = async ({ params }: { params: { manka: string } }) => {
-  console.log('PARA', params)
   const manga = await getMangaByName(params.manka)
 
   if (!manga) redirect('/')
