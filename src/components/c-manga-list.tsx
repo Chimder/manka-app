@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useFiLter } from '@/shared/Store/filter'
 import useStore from '@/shared/Store/useStore'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -16,10 +17,11 @@ type pageParam = {
 
 export const MangaList = () => {
   const filter = useStore(useFiLter, store => store)
+  const path = usePathname()
 
   const fetchAnimePages = async ({ pageParam }: pageParam) => {
     const response = await getMangaByGenres(
-      filter?.genresTag!,
+      filter?.genresTag,
       filter?.inputValue,
       filter?.statusTag,
       filter?.langTag,
@@ -38,7 +40,7 @@ export const MangaList = () => {
     isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['mangas'],
+    queryKey: ['mangas', path],
     queryFn: fetchAnimePages,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
       if (lastPage.length === 0) {
@@ -48,7 +50,8 @@ export const MangaList = () => {
     },
     initialPageParam: 1,
     enabled: !!filter,
-    refetchOnWindowFocus: false,
+
+    // refetchOnWindowFocus: false,
   })
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export const MangaList = () => {
     filter?.statusTag,
     filter?.sortTag,
     filter?.inputValue,
-    refetch,
+    // refetch,
   ])
 
   const { ref, inView } = useInView()

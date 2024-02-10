@@ -94,12 +94,14 @@ export const getMangaByGenres = async (
     if (genres && genres.length > 0) {
       where.genres = { hasEvery: genres }
     }
-    return prisma.anime.findMany({
+    const res = await prisma.anime.findMany({
       where: where,
       orderBy: orderBy,
       skip: skip,
       take: perPage,
     })
+    console.log('ResFil', res)
+    return res
   } catch (error) {
     console.error('Error in getMangaByGenres:', error)
     throw error
