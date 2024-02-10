@@ -69,12 +69,12 @@ export const getMangaPopular = cache(async () => {
 })
 
 export const getMangaByGenres = async (
-  genres?: string[],
-  name?: string,
-  status?: string,
-  country?: string,
-  orderField?: string,
-  orderSort?: string,
+  genres?: string[] | '',
+  name?: string | '',
+  status?: string | '',
+  country?: string | '',
+  orderField?: string | '',
+  orderSort?: string | '',
   page?: number,
   perPage?: number,
 ) => {

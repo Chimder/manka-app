@@ -47,6 +47,7 @@ export const MangaList = () => {
       return lastPageParam + 1
     },
     initialPageParam: 1,
+    enabled: !!filter,
     refetchOnWindowFocus: false,
   })
 

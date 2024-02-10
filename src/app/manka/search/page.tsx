@@ -10,7 +10,7 @@ import { BadgeList } from '@/components/badge-list'
 import { MangaList } from '@/components/c-manga-list'
 import { DropDownMenuN } from '@/components/drop-down-menu'
 
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 function mangaSearch() {
   const filter = useStore(useFiLter, state => state)
 
